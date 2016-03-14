@@ -4,7 +4,7 @@ var timeDiff = function(earlier, later) {
   return Math.round((later.getTime() - earlier.getTime()) / 1000);
 }
 
-var MasterTimer = function(options) {
+function MasterTimer(options) {
   this.timerCompleteCallback = options['onTimerComplete'];
   this.activeTimers = [];
   this.currentId = 1;
@@ -50,12 +50,28 @@ var MasterTimer = function(options) {
   }
 }
 
-var TimerList = function(listElement, countdownFormatter) {
-  this.listElement = listElement;
+function TimerList(listElement, options) {
+  if(options === undefined) {
+    options = {};
+  }
 
-  this.countdownFormatter = countdownFormatter || function(timer) {
+  this.options = Object.assign(options, {
+    countdownFormatter: countdownFormatter,
+    renderItem: renderItem
+  });
+
+  function countdownFormatter(timer) {
     return 'Timer ' + timer['id'] + ' expiring in ' + timeDiff(new Date(), timer['expires']) + ' seconds';
   };
+
+  function renderItem(item) {
+    var node = document.createElement('li');
+    var text = document.createTextNode(this.options.countdownFormatter(item));
+    node.appendChild(text);
+    return node;
+  }
+
+  this.listElement = listElement;
 
   this.items = [];
 
@@ -76,17 +92,14 @@ var TimerList = function(listElement, countdownFormatter) {
     }
 
     this.items.forEach(function(item) {
-      var li = document.createElement('li');
-      var text = document.createTextNode(this.countdownFormatter(item))
-      li.appendChild(text);
-
-      this.listElement.appendChild(li);
+      var node = this.options.renderItem.apply(this, [item]);
+      this.listElement.appendChild(node);
     }, this);
 
   };
 };
 
-var TickingClock = function(element, startTime) {
+function TickingClock(element, startTime) {
   this.timeReference = startTime ? startTime : new Date();
   this.element = element;
 
