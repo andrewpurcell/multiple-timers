@@ -113,13 +113,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var activeTimerList = new TimerList(document.querySelector('ul.active-timers'));
 
-  var finishedTimerList = new TimerList(document.querySelector('ul.completed-timers'), function(timer) {
-    return 'Timer ' + timer['id'] + ' expired ' + timeDiff(timer['expires'])+ ' seconds ago';
+  var finishedTimerList = new TimerList(document.querySelector('ul.completed-timers'), {
+    countdownFormatter: function(timer) {
+      return 'Timer ' + timer['id'] + ' expired ' + timeDiff(timer['expires'])+ ' seconds ago';
+    }
   });
 
   var masterTimer = new MasterTimer({
     onTimerComplete: function(timer) {
-      alert('timer ' + timer['id'] + ' completed');
+      var alarm = new Audio('alarm.mp3');
+      alarm.play();
       activeTimerList.removeItem(timer);
 
       finishedTimer = Object.assign({}, timer, { expires: new Date() });
