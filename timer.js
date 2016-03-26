@@ -25,7 +25,7 @@ function MasterTimer(options) {
     if (idx >= 0) {
       this.activeTimers = this.activeTimers.slice(0, idx).concat(this.activeTimers.slice(idx+1));
     } else {
-      console.log('could not find timer', timerId);
+      console.log(`could not find timer ${timerId}`);
     }
   }
 
@@ -61,7 +61,7 @@ function TimerList(listElement, options) {
   }, options);
 
   function countdownFormatter(timer) {
-    return 'Timer ' + timer['id'] + ' expiring in ' + timeDiff(new Date(), timer['expires']) + ' seconds';
+    return `Timer ${timer['id']} expiring in ${timeDiff(new Date(), timer['expires'])} seconds`;
   };
 
   function renderItem(item) {
@@ -107,7 +107,7 @@ function TickingClock(element, startTime) {
     var that = this;
 
     window.setInterval(function() {
-      that.element.textContent = timeDiff(that.timeReference) + ' seconds';
+      that.element.textContent = `${timeDiff(that.timeReference)} seconds`;
     }, 100);
   }
 }
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var finishedTimerList = new TimerList(document.querySelector('ul.completed-timers'), {
     countdownFormatter: function(timer) {
-      return 'Timer ' + timer['id'] + ' expired ' + timeDiff(timer['expires'])+ ' seconds ago';
+      return `Timer ${timer['id']} expired ${timeDiff(timer['expires'])} seconds ago`;
     }
   });
 
