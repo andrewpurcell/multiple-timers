@@ -55,10 +55,10 @@ function TimerList(listElement, options) {
     options = {};
   }
 
-  this.options = Object.assign(options, {
+  this.options = Object.assign({
     countdownFormatter: countdownFormatter,
     renderItem: renderItem
-  });
+  }, options);
 
   function countdownFormatter(timer) {
     return 'Timer ' + timer['id'] + ' expiring in ' + timeDiff(new Date(), timer['expires']) + ' seconds';
