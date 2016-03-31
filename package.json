@@ -1,0 +1,22 @@
+{
+  "name": "multi-timer",
+  "version": "1.0.0",
+  "description": "Run countdown multiple timers at once.",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewpurcell/multiple-timers.git"
+  },
+  "author": "Andrew Purcell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewpurcell/multiple-timers/issues"
+  },
+  "homepage": "https://github.com/andrewpurcell/multiple-timers#readme",
+  "dependencies": {
+    "webpack": "^1.12.14"
+  }
+}
